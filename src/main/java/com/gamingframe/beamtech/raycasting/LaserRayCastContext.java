@@ -24,7 +24,9 @@ public class LaserRayCastContext extends RaycastContext {
     @Override
     public VoxelShape getBlockShape(BlockState state, BlockView world, BlockPos pos) {
         if (state.isAir() || state.isOf(Blocks.WATER) || state.getBlock() instanceof TransparentBlock
-                || (state.getBlock() instanceof PaneBlock && state.getSoundGroup() == BlockSoundGroup.GLASS) || (source != null && world.getBlockEntity(pos) == source) || (lastHitMirror != null && pos.toCenterPos().distanceTo(lastHitMirror) < 0.2)) {
+                || (state.getBlock() instanceof PaneBlock && state.getSoundGroup() == BlockSoundGroup.GLASS)
+                || (source != null && world.getBlockEntity(pos) == source)
+                || (lastHitMirror != null && pos.toCenterPos().distanceTo(lastHitMirror) < 0.2)) {
             return VoxelShapes.empty();
         }
         return state.getCollisionShape(world, pos);

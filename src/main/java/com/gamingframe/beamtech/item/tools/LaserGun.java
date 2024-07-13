@@ -6,6 +6,9 @@ import com.gamingframe.beamtech.item.ModItems;
 import com.gamingframe.beamtech.mixin.KeybindingAccessor;
 import com.gamingframe.beamtech.raycasting.LaserRayCastContext;
 import com.gamingframe.beamtech.sounds.ModSounds;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.util.InputUtil;
@@ -19,13 +22,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
-import net.minecraft.util.ClickType;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.*;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
@@ -123,20 +124,30 @@ public class LaserGun extends Item implements SimpleEnergyItem {
                     // Apply the offset to the eye position
                     Vec3d offsetEyePos = eyePos.add(offset);
 
-                    renderLaser(world, offsetEyePos, result.getPos());
-
-                    ScreenshakeInstance laserScreenShake = new PositionedScreenshakeInstance(35, entity.getPos(), 30f, 45f, Easing.CIRC_IN_OUT).setIntensity(0.3f, 0.5f, 0f);
+                    ScreenshakeInstance laserScreenShake = new PositionedScreenshakeInstance(10, entity.getPos(), 30f, 45f, Easing.CIRC_IN_OUT).setIntensity(0.2f, 0.4f, 0f);
                     ScreenshakeHandler.addScreenshake(laserScreenShake);
 
-                    Box box = new Box(entity.getEyePos(), result.getPos());
+                    if (!world.isClient) {
+                        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 
-                    List<Entity> entities = world.getOtherEntities(null, box);
+                        buf.writeVector3f(offsetEyePos.toVector3f());
+                        buf.writeVector3f(result.getPos().toVector3f());
+                        
+                        PlayerLookup.all(world.getServer()).forEach(serverPlayerEntity -> {
+                            ServerPlayNetworking.send(serverPlayerEntity, new Identifier(BeamTech.MOD_ID, "spawn_laser_particles"), buf);
+                        });
 
-                    for (Entity entity2 : entities) {
-                        Box entityBox = entity2.getBoundingBox().expand(0.3);
 
-                        if (entityBox.raycast(entity.getEyePos(), result.getPos()).isPresent()) {
-                            entity2.damage(entity2.getDamageSources().generic(), (float) 10);
+                        Box box = new Box(entity.getEyePos(), result.getPos());
+
+                        List<Entity> entities = world.getOtherEntities(null, box);
+
+                        for (Entity entity2 : entities) {
+                            Box entityBox = entity2.getBoundingBox().expand(0.3);
+
+                            if (entityBox.raycast(entity.getEyePos(), result.getPos()).isPresent()) {
+                                entity2.damage(entity2.getDamageSources().generic(), (float) 15);
+                            }
                         }
                     }
                 }

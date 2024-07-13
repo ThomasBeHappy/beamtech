@@ -70,6 +70,9 @@ public class LaserBlock extends BlockWithEntity   {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
+        if (ctx.getPlayer().isSneaking()) {
+            return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection());
+        }
         return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection().getOpposite());
     }
 

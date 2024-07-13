@@ -4,6 +4,8 @@
     "facing=north": { "model": "beamtech:block/laser_combiner" },
     "facing=east":  { "model": "beamtech:block/laser_combiner", "y":  90 },
     "facing=south": { "model": "beamtech:block/laser_combiner", "y": 180 },
-    "facing=west":  { "model": "beamtech:block/laser_combiner", "y": 270 }
+    "facing=west":  { "model": "beamtech:block/laser_combiner", "y": 270 },
+    "facing=up":  { "model": "beamtech:block/laser_combiner_upwards" },
+    "facing=down":  { "model": "beamtech:block/laser_combiner_downwards" }
   }
 }

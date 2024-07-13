@@ -117,7 +117,7 @@ public class LaserBlockEntity extends BlockEntity implements IEmitter, NamedScre
                 be.power = 5;
                 be.max_range = 50;
             }
-            be.shootLaser(be.world, startPos, Vec3d.of(direction.getVector()), be.max_range);
+            be.shootLaser(be.world, startPos, Vec3d.of(direction.getVector()), be.max_range, be);
         }else {
             if (be.registeredLaserInteractable != null) {
                 be.registeredLaserInteractable.onNoLongerHit(be);
@@ -139,7 +139,7 @@ public class LaserBlockEntity extends BlockEntity implements IEmitter, NamedScre
 
 
     @Override
-    public void shootLaser(World world, Vec3d startPos, Vec3d direction, int remainingRange) {
+    public void shootLaser(World world, Vec3d startPos, Vec3d direction, int remainingRange, BlockEntity source) {
         if (remainingRange <= 0) return;
 
         Vec3d endPos = startPos.add(direction.multiply(remainingRange));
@@ -149,29 +149,31 @@ public class LaserBlockEntity extends BlockEntity implements IEmitter, NamedScre
                 endPos,
                 RaycastContext.ShapeType.OUTLINE,
                 RaycastContext.FluidHandling.NONE,
-                this, lastHitMirror));
+                source, lastHitMirror));
 
         BlockPos hitPos = hitResult.getBlockPos();
         BlockState hitState = world.getBlockState(hitPos);
 
 
-        if (world.getTime() % 10 == 0) {
-            Box box = new Box(startPos, hitResult.getPos()).expand(0.5);
+        if (!world.isClient) {
+            if (world.getTime() % 10 == 0) {
+                Box box = new Box(startPos, hitResult.getPos()).expand(0.5);
 
-            List<Entity> entities = world.getOtherEntities(null, box);
+                List<Entity> entities = world.getOtherEntities(null, box);
 
-            for (Entity entity : entities) {
-                Box entityBox = entity.getBoundingBox().expand(0.3);
+                for (Entity entity : entities) {
+                    Box entityBox = entity.getBoundingBox().expand(0.3);
 
-                if (entityBox.raycast(startPos, endPos).isPresent()) {
-                    if (entity instanceof ItemEntity item) {
-                        ItemStack stack = item.getStack();
-                        if (stack.getItem() == Items.SAND) {
-                            ItemStack superTreatedGlass = new ItemStack(ModItems.SUPERTREATED_GLASS, stack.getCount());
-                            item.setStack(superTreatedGlass);
+                    if (entityBox.raycast(startPos, endPos).isPresent()) {
+                        if (entity instanceof ItemEntity item) {
+                            ItemStack stack = item.getStack();
+                            if (stack.getItem() == Items.SAND) {
+                                ItemStack superTreatedGlass = new ItemStack(ModItems.SUPERTREATED_GLASS, stack.getCount());
+                                item.setStack(superTreatedGlass);
+                            }
+                        } else {
+                            entity.damage(entity.getDamageSources().generic(), (float) power / 2);
                         }
-                    } else {
-                        entity.damage(entity.getDamageSources().generic(), (float) power / 2);
                     }
                 }
             }
@@ -180,8 +182,10 @@ public class LaserBlockEntity extends BlockEntity implements IEmitter, NamedScre
         // Calculate the distance to the hit position
         double distance = startPos.distanceTo(hitResult.getPos());
 
+        if (world.isClient) {
+            renderLaser(world, startPos, hitResult.getPos());
+        }
         // Render the laser up to the hit point
-        renderLaser(world, startPos, hitResult.getPos());
 
         if (world.getBlockEntity(hitPos) instanceof ILaserInteractable be) {
             registeredLaserInteractable = be;
@@ -200,13 +204,15 @@ public class LaserBlockEntity extends BlockEntity implements IEmitter, NamedScre
             int result = mirror.getNewStartPos(hitState, hitPos, hitResult.getPos(), direction, newPos);
 
             if (result == 0) {
-                shootLaser(world, hitResult.getPos(), direction, remainingRange - (int)distance);
+                shootLaser(world, hitResult.getPos(), direction, remainingRange - (int)distance, null);
                 return;
             }else if (result == -1) {
                 return;
             }
 
-            renderLaser(world, hitResult.getPos(), newPos.get());
+            if (world.isClient) {
+                renderLaser(world, hitResult.getPos(), newPos.get());
+            }
 
             if (newDirection.distanceTo(direction) <= 0.1) {
                 return;
@@ -214,7 +220,7 @@ public class LaserBlockEntity extends BlockEntity implements IEmitter, NamedScre
 
             currentReflections++;
             // Emit laser in the new direction, subtracting the distance already traveled
-            shootLaser(world, newPos.get(), newDirection, remainingRange - (int)distance);
+            shootLaser(world, newPos.get(), newDirection, remainingRange - (int)distance, null);
         }else if (registeredLaserInteractable != null) {
             registeredLaserInteractable.onNoLongerHit(this);
             registeredLaserInteractable = null;

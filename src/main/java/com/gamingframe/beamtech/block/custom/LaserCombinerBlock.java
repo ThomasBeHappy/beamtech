@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class LaserCombinerBlock extends HorizontalFacingBlock implements BlockEntityProvider {
+public class LaserCombinerBlock extends BlockWithEntity {
     public LaserCombinerBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
@@ -46,7 +46,10 @@ public class LaserCombinerBlock extends HorizontalFacingBlock implements BlockEn
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing().getOpposite());
+        if (ctx.getPlayer().isSneaking()) {
+            return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection());
+        }
+        return this.getDefaultState().with(FACING, ctx.getPlayerLookDirection().getOpposite());
     }
 
     @Override

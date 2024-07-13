@@ -1,11 +1,15 @@
 {
-	"required": true,
-	"package": "com.gamingframe.beamtech.mixin",
-	"compatibilityLevel": "JAVA_17",
-	"mixins": [
-      "KeybindingAccessor"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "package": "com.gamingframe.beamtech.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "ItemRendererAccessor",
+    "ItemRendererMixin",
+    "ModelLoaderMixin",
+    "KeybindingAccessor"
+  ]
 }
