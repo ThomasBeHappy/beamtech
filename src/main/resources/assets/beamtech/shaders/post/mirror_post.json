@@ -1,0 +1,31 @@
+{
+  "targets": [
+    "final"
+  ],
+  "passes": [
+    {
+      "name": "beamtech:mirror",
+      "intarget": "minecraft:main",
+      "outtarget": "final",
+      "uniforms": [
+        {
+          "name": "modelViewProjectionMatrix",
+          "values": [[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]]
+        },
+        {
+          "name": "modelViewMatrix",
+          "values": [[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]]
+        },
+        {
+          "name": "normalMatrix",
+          "values": [[1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]]
+        }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "final",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

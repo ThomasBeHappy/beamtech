@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "facing=north": { "model": "beamtech:block/laser_emitter" },
+    "facing=east":  { "model": "beamtech:block/laser_emitter", "y":  90 },
+    "facing=south": { "model": "beamtech:block/laser_emitter", "y": 180 },
+    "facing=west":  { "model": "beamtech:block/laser_emitter", "y": 270 },
+    "facing=up":  { "model": "beamtech:block/laser_emitter_upwards" },
+    "facing=down":  { "model": "beamtech:block/laser_emitter_downwards" }
+  }
+}

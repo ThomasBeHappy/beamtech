@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "WEW",
+    "WCW"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:iron_ingot"
+    },
+    "E": {
+      "item": "beamtech:emitter"
+    },
+    "C": {
+      "item": "beamtech:capacitor"
+    }
+  },
+  "result": {
+    "item": "beamtech:laser_emitter",
+    "count": 1
+  }
+}

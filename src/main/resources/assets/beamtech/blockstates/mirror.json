@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "rotation=rotate_n": { "model": "beamtech:block/mirror"},
+    "rotation=rotate_nne":  { "model": "beamtech:block/mirror_22"},
+    "rotation=rotate_ne":  { "model": "beamtech:block/mirror_45"},
+    "rotation=rotate_nee": { "model": "beamtech:block/mirror_67" },
+    "rotation=rotate_e":  { "model": "beamtech:block/mirror_90"},
+    "rotation=rotate_see":  { "model": "beamtech:block/mirror_112"},
+    "rotation=rotate_se":  { "model": "beamtech:block/mirror_135"},
+    "rotation=rotate_sse":  { "model": "beamtech:block/mirror_157" }
+  }
+}

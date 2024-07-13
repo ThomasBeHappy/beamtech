@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "beamtech",
+	"version": "${version}",
+	"name": "BeamTech",
+	"description": "Master the art of light with customizable laser systems for unparalleled power and precision!",
+	"authors": [
+		"GamingFrame"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/beamtech/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.gamingframe.beamtech.BeamTech"
+		],
+		"client": [
+			"com.gamingframe.beamtech.BeamTechClient"
+		],
+		"fabric-datagen": [
+			"com.gamingframe.beamtech.BeamTechDataGenerator"
+		]
+	},
+	"mixins": [
+		"beamtech.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

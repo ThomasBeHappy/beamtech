@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.gamingframe.beamtech.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+      "KeybindingAccessor"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

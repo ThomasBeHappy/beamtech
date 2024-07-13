@@ -1,0 +1,8 @@
+{
+  "laser_gun_firing": {
+    "subtitle": "sounds.beamtech.laser_gun_firing",
+    "sounds": [
+      "beamtech:laser_gun_firing"
+    ]
+  }
+}

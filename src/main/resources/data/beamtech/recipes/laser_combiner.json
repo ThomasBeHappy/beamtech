@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WGW",
+    "FMF",
+    "CFC"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
+    "F": {
+      "item": "beamtech:focal_lens"
+    },
+    "M": {
+      "item": "beamtech:mirror_ingredient"
+    },
+    "C": {
+      "item": "beamtech:capacitor"
+    }
+  },
+  "result": {
+    "item": "beamtech:laser_combiner",
+    "count": 1
+  }
+}

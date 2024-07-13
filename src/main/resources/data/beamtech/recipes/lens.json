@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " W ",
+    "WRW",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "item": "beamtech:super_treated_glass"
+    },
+    "R": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "result": {
+    "item": "beamtech:lens",
+    "count": 1
+  }
+}

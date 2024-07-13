@@ -1,0 +1,26 @@
+{
+  "item.beamtech.alloy_iron": "Iron Alloy",
+  "item.beamtech.focal_lens": "Focal Lens",
+  "item.beamtech.range_lens": "Range Lens",
+  "item.beamtech.lens": "Lens",
+  "item.beamtech.capacitor": "Capacitor",
+  "item.beamtech.mirror_ingredient": "Reflective Panel",
+  "item.beamtech.laser_gun": "Laser Weapon",
+  "item.beamtech.super_treated_glass": "Super Treated Glass",
+
+  "item.beamtech.laser_block.desc": "A laser emitter, what else did you expect",
+  "item.beamtech.mirror.desc": "Reflects lasers to a different direction",
+  "item.beamtech.laser_combiner.desc": "Combines 2 lasers to make 1 bigger laser.",
+  "item.beamtech.laser_gun.desc": "A very powerful weapon, do not underestimate its power.",
+  "item.beamtech.focal_lens.desc": "Increases power but decreases range.",
+  "item.beamtech.range_lens.desc": "Increases range but decreases power.",
+
+  "block.beamtech.laser_emitter": "Laser Emitter",
+  "block.beamtech.mirror": "Mirror",
+  "block.beamtech.laser_combiner": "Laser Combiner",
+
+  "itemgroup.beamtech": "BeamTech Items",
+
+  "tooltip.beamtech.hold_crouch_desc":  "Hold [%s] to see Description",
+  "sounds.beamtech.laser_gun_firing": "Laser weapon firing"
+}

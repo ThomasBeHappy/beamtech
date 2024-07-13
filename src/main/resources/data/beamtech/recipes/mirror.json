@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    "WIW",
+    "LLL"
+  ],
+  "key": {
+    "W": {
+      "item": "beamtech:super_treated_glass"
+    },
+    "I": {
+      "item": "beamtech:mirror_ingredient"
+    },
+    "L": {
+      "tag": "minecraft:logs"
+    }
+  },
+  "result": {
+    "item": "beamtech:mirror",
+    "count": 1
+  }
+}
