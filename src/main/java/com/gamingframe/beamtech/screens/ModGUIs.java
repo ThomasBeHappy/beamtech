@@ -13,6 +13,10 @@ public class ModGUIs {
             new ScreenHandlerType<>((syncId, inventory) -> new EmitterGUI(syncId, inventory, ScreenHandlerContext.EMPTY),
                     FeatureFlags.VANILLA_FEATURES));
 
+    public static final ScreenHandlerType<LaserOvenGUI> LASER_OVEN_GUI = Registry.register(Registries.SCREEN_HANDLER, Identifier.of(BeamTech.MOD_ID, "laser_oven_screen"),
+            new ScreenHandlerType<>((syncId, inventory) -> new LaserOvenGUI(syncId, inventory, ScreenHandlerContext.EMPTY),
+                    FeatureFlags.VANILLA_FEATURES));
+
 
     public static void InitializeGUIs() {
         BeamTech.LOGGER.info("Initializing Screens for {}", BeamTech.MOD_ID);
