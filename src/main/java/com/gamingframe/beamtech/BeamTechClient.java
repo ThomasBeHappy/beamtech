@@ -2,7 +2,9 @@ package com.gamingframe.beamtech;
 
 import com.gamingframe.beamtech.block.ModBlockEntities;
 import com.gamingframe.beamtech.block.custom.entity.LaserBlockEntity;
+import com.gamingframe.beamtech.block.custom.entity.LaserCombinerBlockEntity;
 import com.gamingframe.beamtech.block.custom.entity.renderer.LaserBlockEntityRenderer;
+import com.gamingframe.beamtech.block.custom.entity.renderer.LaserCombinerEntityRenderer;
 import com.gamingframe.beamtech.screens.EmitterBlockScreen;
 import com.gamingframe.beamtech.screens.EmitterGUI;
 import com.gamingframe.beamtech.screens.ModGUIs;
@@ -46,6 +48,16 @@ public class BeamTechClient implements ClientModInitializer {
             }
         });
 
+        ClientPlayNetworking.registerGlobalReceiver(new Identifier(BeamTech.MOD_ID, "combiner_update_laser_lens"), (client, handler, buf, responseSender) -> {
+            BlockPos pos = buf.readBlockPos();
+            ItemStack itemStack = buf.readItemStack();
+
+            BlockEntity blockEntity = client.world.getBlockEntity(pos);
+            if (blockEntity instanceof LaserCombinerBlockEntity laserBlockEntity) {
+                laserBlockEntity.syncInventory(itemStack);
+            }
+        });
+
         ClientPlayNetworking.registerGlobalReceiver(new Identifier(BeamTech.MOD_ID, "spawn_laser_particles"), ((client, handler, buf, responseSender) -> {
             Vec3d startPos = new Vec3d(buf.readVector3f());
             Vec3d endPos = new Vec3d(buf.readVector3f());
@@ -80,6 +92,7 @@ public class BeamTechClient implements ClientModInitializer {
         }));
 
         BlockEntityRendererFactories.register(ModBlockEntities.LASER_EMITTER_BLOCK_ENTITY, LaserBlockEntityRenderer::new);
+        BlockEntityRendererFactories.register(ModBlockEntities.LASER_COMBINER_BLOCK_ENTITY, LaserCombinerEntityRenderer::new);
 
         PostProcessHandler.addInstance(MirrorReflectionPostProcessor.INSTANCE);
     }

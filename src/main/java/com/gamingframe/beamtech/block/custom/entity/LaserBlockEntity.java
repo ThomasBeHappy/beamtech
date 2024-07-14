@@ -42,6 +42,7 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -133,6 +134,11 @@ public class LaserBlockEntity extends BlockEntity implements IEmitter, NamedScre
         if (registeredLaserInteractable != null) {
             registeredLaserInteractable.onNoLongerHit(this);
             registeredLaserInteractable = null;
+        }
+
+        ItemStack toDrop = getStack(0);
+        if (!toDrop.isOf(Items.AIR)) {
+            ItemScatterer.spawn(world, this.pos, getItems());
         }
         super.markRemoved();
     }
@@ -317,7 +323,7 @@ public class LaserBlockEntity extends BlockEntity implements IEmitter, NamedScre
         }
     }
 
-        @Override
+    @Override
     public DefaultedList<ItemStack> getItems() {
         return items;
     }

@@ -1,20 +1,34 @@
 package com.gamingframe.beamtech.block.custom.entity;
 
+import com.gamingframe.beamtech.BeamTech;
 import com.gamingframe.beamtech.block.ModBlockEntities;
 import com.gamingframe.beamtech.block.custom.LaserBlock;
 import com.gamingframe.beamtech.block.custom.MirrorBlock;
+import com.gamingframe.beamtech.interfaces.EmitterInventory;
 import com.gamingframe.beamtech.interfaces.IEmitter;
 import com.gamingframe.beamtech.interfaces.ILaserInteractable;
 import com.gamingframe.beamtech.item.ModItems;
 import com.gamingframe.beamtech.raycasting.LaserRayCastContext;
+import io.netty.buffer.Unpooled;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -22,6 +36,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.registry.common.particle.*;
 import team.lodestar.lodestone.systems.easing.*;
 import team.lodestar.lodestone.systems.particle.builder.*;
@@ -34,13 +49,14 @@ import java.util.List;
 import java.awt.Color;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class LaserCombinerBlockEntity extends BlockEntity implements IEmitter, ILaserInteractable {
+public class LaserCombinerBlockEntity extends BlockEntity implements IEmitter, ILaserInteractable, EmitterInventory {
+    private final DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
     private static final int MAX_RANGE = 50; // Max range for the laser
+    private static final int MAX_REFLECTIONS = 100;
+    private int currentReflections = 0;
     public List<IEmitter> emitters = new ArrayList<>();
     public int power = 0;
     public ILaserInteractable registeredLaserInteractable;
-    private static final int MAX_REFLECTIONS = 100;
-    private int currentReflections = 0;
 
     public LaserCombinerBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.LASER_COMBINER_BLOCK_ENTITY, pos, state);
@@ -74,6 +90,12 @@ public class LaserCombinerBlockEntity extends BlockEntity implements IEmitter, I
             registeredLaserInteractable.onNoLongerHit(this);
             registeredLaserInteractable = null;
         }
+
+        ItemStack toDrop = getStack(0);
+        if (!toDrop.isOf(Items.AIR)) {
+            ItemScatterer.spawn(world, this.pos, getItems());
+        }
+
         super.markRemoved();
     }
 
@@ -246,67 +268,49 @@ public class LaserCombinerBlockEntity extends BlockEntity implements IEmitter, I
         }
 
         world.playSound(null, centerPos, SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1f, 1f);
+    }
 
-//        // Normalize the direction vector
-//        Vec3d normalizedDirection = direction.normalize();
-//
-//        //Determine the plane normal vector based on the direction vector
-//        Vec3d planeNormal;
-//        if (Math.abs(normalizedDirection.x) > Math.abs(normalizedDirection.y) && Math.abs(normalizedDirection.x) > Math.abs(normalizedDirection.z)) {
-//            planeNormal = new Vec3d(1, 0, 0);
-//        } else if (Math.abs(normalizedDirection.y) > Math.abs(normalizedDirection.z)) {
-//            planeNormal = new Vec3d(0, 1, 0);
-//        } else {
-//            planeNormal = new Vec3d(0, 0, 1);
-//        }
-//
-//        // Loop through all blocks in a cube around the center position
-//        for (int x = -radius; x <= radius; x++) {
-//            for (int y = -radius; y <= radius; y++) {
-//                for (int z = -radius; z <= radius; z++) {
-//                    BlockPos currentPos = centerPos.add(x, y, z);
-//                    if (world.getBlockState(currentPos).isAir()) continue;
-//
-//                    // Calculate the vector from the hit position to the current block position
-//                    Vec3d currentVec = new Vec3d(currentPos.getX() - hitPos.x, currentPos.getY() - hitPos.y, currentPos.getZ() - hitPos.z);
-//
-//                    // Calculate the distance to the plane
-//                    double distanceToPlane = planeNormal.dotProduct(direction);
-//
-//                    // Project the vector onto the plane
-//                    Vec3d projectedVec = currentVec.subtract(direction.multiply(distanceToPlane));
-//
-//                    // Calculate the distance from the projected point to the center
-//                    double distance = projectedVec.length();
-//
-//                    // Check if the block is within the specified radius on the plane
-//                    // Adding a small epsilon value to account for floating-point precision errors
-//                    double epsilon = 1e-6;
-//                    if (Math.abs(distanceToPlane) < epsilon && distance <= radius + epsilon) {
-//                        // Remove the block at the current position
-//                        if (!world.isClient) {
-//                            world.removeBlock(currentPos, false);
-//                        }
-//
-//                        Color startingColor = new Color(50, 50, 50);
-//
-//                        if (world.isClient) {
-//                            var smoke = WorldParticleBuilder.create(LodestoneParticleRegistry.SMOKE_PARTICLE).setScaleData(GenericParticleData.create(0.10f * (power / 4f) / 1.5f).build())
-//                                    .setTransparencyData(GenericParticleData.create(0.8f).build())
-//                                    .setColorData(ColorParticleData.create(startingColor).build())
-//                                    .setSpinData(SpinParticleData.create(0.2f, 0.4f).setSpinOffset((world.getTime() * 0.2f) % 6.28f).setEasing(Easing.QUARTIC_IN).build())
-//                                    .setLifetime(40)
-//                                    .addMotion(0,0.2,0)
-//                                    .enableNoClip();
-//                            smoke.spawn(world, currentPos.getX(), currentPos.getY(), currentPos.getZ());
-//                        }
-//                    }
-//                }
-//            }
-//        }
+    public void syncInventory(ItemStack itemStack) {
+        if (this.world.isClient) {
+            this.setStack(0, itemStack);
+        }
+    }
 
+    @Nullable
+    @Override
+    public Packet<ClientPlayPacketListener> toUpdatePacket() {
+        return BlockEntityUpdateS2CPacket.create(this);
+    }
 
+    @Override
+    public void readNbt(NbtCompound nbt) {
+        super.readNbt(nbt);
+        Inventories.readNbt(nbt, items);
+    }
 
+    @Override
+    public void writeNbt(NbtCompound nbt) {
+        Inventories.writeNbt(nbt, items);
+        super.writeNbt(nbt);
+    }
+
+    @Override
+    public void markDirty() {
+        world.updateListeners(pos, getCachedState(), getCachedState(), 3);
+        if (!this.world.isClient) {
+            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+            buf.writeBlockPos(this.pos);
+            buf.writeItemStack(this.getStack(0));
+
+            PlayerLookup.tracking(this).forEach((serverPlayerEntity) -> {
+                ServerPlayNetworking.send(serverPlayerEntity, new Identifier(BeamTech.MOD_ID, "combiner_update_laser_lens"), buf);
+            });
+        }
+    }
+
+    @Override
+    public NbtCompound toInitialChunkDataNbt() {
+        return createNbt();
     }
 
     @Override
@@ -319,5 +323,16 @@ public class LaserCombinerBlockEntity extends BlockEntity implements IEmitter, I
     @Override
     public void onNoLongerHit(IEmitter emitter) {
         emitters.remove(emitter);
+    }
+
+    @Override
+    public DefaultedList<ItemStack> getItems() {
+        return items;
+    }
+
+    // TODO: make more lenses for the combiner to use.
+    @Override
+    public boolean isValid(int slot, ItemStack stack) {
+        return EmitterInventory.super.isValid(slot, stack);
     }
 }

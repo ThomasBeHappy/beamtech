@@ -4,6 +4,7 @@ import com.gamingframe.beamtech.block.ModBlockEntities;
 import com.gamingframe.beamtech.block.ModBlocks;
 import com.gamingframe.beamtech.item.ModItemGroups;
 import com.gamingframe.beamtech.item.ModItems;
+import com.gamingframe.beamtech.recipes.Recipes;
 import com.gamingframe.beamtech.sounds.ModSounds;
 import net.fabricmc.api.ModInitializer;
 
@@ -28,6 +29,7 @@ public class BeamTech implements ModInitializer {
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerBlockEntities();
 		ModSounds.registerSounds();
+		Recipes.registerRecipes();
 
 		LOGGER.info("Hello Fabric world!");
 	}

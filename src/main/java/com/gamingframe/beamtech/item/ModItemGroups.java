@@ -27,6 +27,7 @@ public class ModItemGroups {
                         entries.add(ModBlocks.LASER_EMITTER);
                         entries.add(ModBlocks.LASER_COMBINER_BLOCK);
                         entries.add(ModBlocks.MIRROR_BLOCK);
+                        entries.add(ModBlocks.LASER_OVEN_BLOCK);
                     }).build());
 
     public static void registerItemGroups() {
