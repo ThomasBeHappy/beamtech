@@ -1,0 +1,11 @@
+{
+  "type": "beamtech:beamtechdim_type",
+  "generator": {
+    "type": "beamtech:void_chunk_generator",
+    "settings": "minecraft:overworld",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "minecraft:the_void"
+    }
+  }
+}

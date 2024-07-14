@@ -10,6 +10,8 @@ import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
+
 public class ModItemGroups {
     public static final ItemGroup BEAMTECH_GROUP = Registry.register(Registries.ITEM_GROUP,
             Identifier.of(BeamTech.MOD_ID, "beamtech"),
@@ -28,7 +30,23 @@ public class ModItemGroups {
                         entries.add(ModBlocks.LASER_COMBINER_BLOCK);
                         entries.add(ModBlocks.MIRROR_BLOCK);
                         entries.add(ModBlocks.LASER_OVEN_BLOCK);
+                        entries.add(ModBlocks.METAL_MESH_DOOR_BLOCK);
                     }).build());
+
+    public static final ItemGroup DEV_GROUP = Registry.register(Registries.ITEM_GROUP,
+            Identifier.of(BeamTech.MOD_ID, "beamtech_dev"),
+            FabricItemGroup.builder().displayName(Text.translatable("itemgroup.beamtech"))
+                    .icon(() -> new ItemStack(ModBlocks.LASER_EMITTER)).entries((displayContext, entries) -> {
+                        entries.add(ModBlocks.PIPE);
+                        entries.add(ModBlocks.PIPE_T);
+                        entries.add(ModBlocks.PIPE_UP);
+                        entries.add(ModBlocks.PIPE_ANGLED);
+                        entries.add(ModBlocks.PIPE_T_UP);
+                        entries.add(ModBlocks.PIPE_ANGLED_UP);
+                        entries.add(ModBlocks.PIPE_ANGLED_HORIZONTAL);
+                        entries.add(ModBlocks.FLUORESCENT_BULB_BLOCK);
+                    }).build());
+
 
     public static void registerItemGroups() {
         BeamTech.LOGGER.info("Registering Item Groups for " + BeamTech.MOD_ID);

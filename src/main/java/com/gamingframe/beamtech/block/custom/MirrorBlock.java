@@ -42,14 +42,13 @@ public class MirrorBlock extends HorizontalFacingBlock {
     }
 
 
+    // TODO: Fix
     @Override
     public void neighborUpdate(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean notify) {
         if (!world.isClient) {
             boolean isPowered = world.isReceivingRedstonePower(pos);
             boolean wasPowered = state.get(POWERED);
             if (isPowered && !wasPowered) {
-                // Handle redstone input
-                System.out.println("Redstone power received!");
                 world.setBlockState(pos, state.with(POWERED, true), 3);
             } else if (!isPowered && wasPowered) {
                 world.setBlockState(pos, state.with(POWERED, false), 3);
@@ -80,7 +79,6 @@ public class MirrorBlock extends HorizontalFacingBlock {
         if (!world.isClient) {
             MirrorRotation currentRotation = state.get(ROTATION);
             MirrorRotation newRotation = currentRotation.next();
-            BeamTech.LOGGER.info("Used mirror, new rotation {} with normal {}", newRotation, newRotation.normal);
             world.setBlockState(pos, state.with(ROTATION, newRotation));
         }
         return ActionResult.SUCCESS;
@@ -114,8 +112,6 @@ public class MirrorBlock extends HorizontalFacingBlock {
 
         Vec3d offset = hitPos.subtract(mirrorCenterPos).multiply(16);
         Point hitOnMirror =  new Point((int) offset.x, (int) offset.z);
-
-        BeamTech.LOGGER.info("Offset {} HitOnMirror {} with Direction {}", offset, hitOnMirror, direction);
 
         Point intersect = rotation.CalculateIntersect(new Point(direction.x * 16,direction.z * 16), hitOnMirror);
 

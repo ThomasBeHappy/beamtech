@@ -1,18 +1,4 @@
 {
-  "blend": {
-    "func": "add",
-    "srcrgb": "srcalpha",
-    "dstrgb": "1-srcalpha"
-  },
   "vertex": "beamtech:mirror",
-  "fragment": "beamtech:mirror",
-  "attributes": ["Position", "Normal", "TexCoord"],
-  "samplers": [
-    {"name": "DiffuseSampler"}
-  ],
-  "uniforms": [
-    {"name": "modelViewProjectionMatrix", "type": "matrix4x4", "count": 1, "values": [[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]]},
-    {"name": "modelViewMatrix", "type": "matrix4x4", "count": 1, "values": [[1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]]},
-    {"name": "normalMatrix", "type": "matrix3x3", "count": 1, "values": [[1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]]}
-  ]
+  "fragment": "beamtech:mirror"
 }

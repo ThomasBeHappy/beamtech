@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "beamtech:block/pipe/pipe_angled_horizontal" },
+    "facing=east":  { "model": "beamtech:block/pipe/pipe_angled_horizontal", "y":  90 },
+    "facing=south": { "model": "beamtech:block/pipe/pipe_angled_horizontal", "y": 180 },
+    "facing=west":  { "model": "beamtech:block/pipe/pipe_angled_horizontal", "y": 270 }
+  }
+}
