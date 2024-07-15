@@ -3,6 +3,7 @@ package com.gamingframe.beamtech;
 import com.gamingframe.beamtech.block.ModBlockEntities;
 import com.gamingframe.beamtech.block.ModBlocks;
 import com.gamingframe.beamtech.commands.TeleportCommand;
+import com.gamingframe.beamtech.effects.ModEffects;
 import com.gamingframe.beamtech.item.ModItemGroups;
 import com.gamingframe.beamtech.item.ModItems;
 import com.gamingframe.beamtech.recipes.Recipes;
@@ -31,6 +32,7 @@ public class BeamTech implements ModInitializer {
 		ModItems.registerModItems();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerBlockEntities();
+		ModEffects.registerEffects();
 		ModSounds.registerSounds();
 		Recipes.registerRecipes();
 		ModDimensions.registerDimensions();
@@ -40,6 +42,6 @@ public class BeamTech implements ModInitializer {
 		});
 
 
-		LOGGER.info("Hello Fabric world!");
+		LOGGER.info("Beamtech initialized.");
 	}
 }

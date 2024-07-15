@@ -38,7 +38,7 @@ fabricApi {
 	configureDataGeneration()
 }
 
-def portingLib = ["asm", "accessors", "attributes", "base", "blocks", "brewing", "client_events", "common", "core", "config", "chunk_loading", "data", "entity", "extensions", "fluids", "gametest", "gui_utils", "items", "lazy_registration", "level_events", "loot", "mixin_extensions", "model_builders", "model_generators", "model_loader", "model_materials", "models", "networking", "obj_loader", "recipe_book_categories", "registries", "tags", "tool_actions", "transfer", "utility",
+def portingLib = ["accessors", "base", "blocks", "core", "data", "extensions", "lazy_registration", "model_generators", "models", "networking", "tool_actions",
 ]
 
 dependencies {
@@ -57,8 +57,8 @@ dependencies {
 	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-world:${project.cca_version}")
 
 	modImplementation("dev.emi:trinkets:${project.trinkets_version}")
-	portingLib.forEach {module ->
-		include("io.github.fabricators_of_create.Porting-Lib:${module}:${project.porting_lib_version}+${project.minecraft_version}")
+	for (String module in port_lib_modules.split(",")) {
+		modImplementation("io.github.fabricators_of_create.Porting-Lib:$module:$port_lib_version")
 	}
 
 	modImplementation("com.jamieswhiteshirt:reach-entity-attributes:${project.rea_version}")
@@ -69,9 +69,9 @@ dependencies {
 
 	modImplementation include("io.github.cottonmc:LibGui:8.1.1+1.20.1")
 
-//     modImplementation("foundry.veil:Veil-fabric-${project.minecraft_version}:${project.veil_version}") {
-//         exclude group: "maven.modrinth"
-//     }
+     modImplementation("foundry.veil:Veil-fabric-${project.minecraft_version}:${project.veil_version}") {
+         exclude group: "maven.modrinth"
+     }
 }
 
 processResources {
