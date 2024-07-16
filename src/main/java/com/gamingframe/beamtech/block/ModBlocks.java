@@ -31,6 +31,9 @@ public class ModBlocks {
     public static final Block LASER_FOCUSER_BLOCK = registerBlock("laser_focuser",
             new LaserFocuserBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()));
 
+    public static final Block LASER_SENSOR_BLOCK = registerBlock("laser_sensor",
+            new LaserSensorBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).nonOpaque()));
+
     //region METAL MESH BLOCKS -------------------------------------------------------------------
     public static final Block METAL_MESH_PLATING_BLOCK = registerBlock("metal_mesh_plating",
             new Block(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).strength(-1.0F, 3600000.0F)));

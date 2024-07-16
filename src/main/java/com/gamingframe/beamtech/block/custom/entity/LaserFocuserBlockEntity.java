@@ -2,6 +2,8 @@ package com.gamingframe.beamtech.block.custom.entity;
 
 import com.gamingframe.beamtech.BeamTech;
 import com.gamingframe.beamtech.block.ModBlockEntities;
+import com.gamingframe.beamtech.effects.FlashBlindnessEffect;
+import com.gamingframe.beamtech.effects.ModEffects;
 import com.gamingframe.beamtech.interfaces.IEmitter;
 import com.gamingframe.beamtech.interfaces.ILaserCraftingRecipe;
 import com.gamingframe.beamtech.interfaces.ILaserInteractable;
@@ -15,6 +17,8 @@ import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -24,6 +28,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
@@ -109,6 +114,16 @@ public class LaserFocuserBlockEntity extends BlockEntity implements ImplementedI
 
     // TODO: Atm this crafts regardless of power (client side) which causes desync issues. Needs to be fixed
     public void tick(World world, BlockPos pos, BlockState state) {
+        for (PlayerEntity entity : world.getPlayers()) {
+            // TODO: check if player is wearing goggles
+            if (entity.getPos().distanceTo(pos.toCenterPos()) < 5) {
+                entity.addStatusEffect(new StatusEffectInstance(
+                        ModEffects.FLASH_BLINDNESS_EFFECT,
+                        6000,
+                        0));
+            }
+        }
+
         if (this.emitter == null || this.getStack(0).isOf(Items.AIR)) return;
 
         ItemStack item = this.getStack(0);

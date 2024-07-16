@@ -1,10 +1,7 @@
 package com.gamingframe.beamtech.block;
 
 import com.gamingframe.beamtech.BeamTech;
-import com.gamingframe.beamtech.block.custom.entity.LaserBlockEntity;
-import com.gamingframe.beamtech.block.custom.entity.LaserCombinerBlockEntity;
-import com.gamingframe.beamtech.block.custom.entity.LaserFocuserBlockEntity;
-import com.gamingframe.beamtech.block.custom.entity.LaserOvenBlockEntity;
+import com.gamingframe.beamtech.block.custom.entity.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -35,6 +32,12 @@ public class ModBlockEntities {
             Registries.BLOCK_ENTITY_TYPE,
             Identifier.of(BeamTech.MOD_ID, "laser_focuser_block_entity"),
             BlockEntityType.Builder.create(LaserFocuserBlockEntity::new, ModBlocks.LASER_FOCUSER_BLOCK).build(null)
+    );
+
+    public static final BlockEntityType<LaserSensorBlockEntity> LASER_SENSOR_BLOCK_ENTITY = Registry.register(
+            Registries.BLOCK_ENTITY_TYPE,
+            Identifier.of(BeamTech.MOD_ID, "laser_sensor_block_entity"),
+            BlockEntityType.Builder.create(LaserSensorBlockEntity::new, ModBlocks.LASER_SENSOR_BLOCK).build(null)
     );
 
 
