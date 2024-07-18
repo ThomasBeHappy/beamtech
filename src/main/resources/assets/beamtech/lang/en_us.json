@@ -22,5 +22,8 @@
   "itemgroup.beamtech": "BeamTech Items",
 
   "tooltip.beamtech.hold_crouch_desc":  "Hold [%s] to see Description",
-  "sounds.beamtech.laser_gun_firing": "Laser weapon firing"
+
+  "sounds.beamtech.laser_gun_firing": "Laser weapon firing",
+  "sounds.beamtech.facility_music": "Music Playing",
+  "sounds.beamtech.singularity_spawning": "Singularity Spawning"
 }

@@ -5,6 +5,8 @@ import com.gamingframe.beamtech.block.custom.entity.LaserBlockEntity;
 import com.gamingframe.beamtech.block.custom.entity.LaserCombinerBlockEntity;
 import com.gamingframe.beamtech.block.custom.entity.renderer.LaserBlockEntityRenderer;
 import com.gamingframe.beamtech.block.custom.entity.renderer.LaserCombinerEntityRenderer;
+import com.gamingframe.beamtech.entities.BlackHoleRenderer;
+import com.gamingframe.beamtech.entities.ModEntities;
 import com.gamingframe.beamtech.screens.EmitterBlockScreen;
 import com.gamingframe.beamtech.screens.EmitterGUI;
 import com.gamingframe.beamtech.screens.ModGUIs;
@@ -13,6 +15,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
@@ -93,6 +96,7 @@ public class BeamTechClient implements ClientModInitializer {
 
         BlockEntityRendererFactories.register(ModBlockEntities.LASER_EMITTER_BLOCK_ENTITY, LaserBlockEntityRenderer::new);
         BlockEntityRendererFactories.register(ModBlockEntities.LASER_COMBINER_BLOCK_ENTITY, LaserCombinerEntityRenderer::new);
+        EntityRendererRegistry.register(ModEntities.BLACK_HOLE, BlackHoleRenderer::new);
 
         PostProcessHandler.addInstance(MirrorReflectionPostProcessor.INSTANCE);
     }

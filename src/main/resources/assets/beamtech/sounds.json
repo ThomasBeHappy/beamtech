@@ -4,5 +4,17 @@
     "sounds": [
       "beamtech:laser_gun_firing"
     ]
+  },
+  "facility_music": {
+    "subtitle": "sounds.beamtech.facility_music",
+    "sounds": [
+      "beamtech:facility_music"
+    ]
+  },
+  "singularity_spawning": {
+    "subtitle": "sounds.beamtech.singularity_spawning",
+    "sounds": [
+      "beamtech:singularity_spawning"
+    ]
   }
 }

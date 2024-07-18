@@ -9,6 +9,8 @@ import net.minecraft.util.Identifier;
 public class ModSounds {
 
     public static final SoundEvent LASER_GUN_FIRING = registerSoundEvent("laser_gun_firing");
+    public static final SoundEvent FACILITY_MUSIC = registerSoundEvent("facility_music");
+    public static final SoundEvent SINGULARITY_SPAWNING = registerSoundEvent("singularity_spawning");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(BeamTech.MOD_ID, name);

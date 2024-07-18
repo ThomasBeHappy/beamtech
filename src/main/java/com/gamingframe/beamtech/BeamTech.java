@@ -2,16 +2,21 @@ package com.gamingframe.beamtech;
 
 import com.gamingframe.beamtech.block.ModBlockEntities;
 import com.gamingframe.beamtech.block.ModBlocks;
+import com.gamingframe.beamtech.commands.SpawnSingularityCommand;
 import com.gamingframe.beamtech.commands.TeleportCommand;
 import com.gamingframe.beamtech.effects.ModEffects;
+import com.gamingframe.beamtech.entities.BlackHoleEntity;
+import com.gamingframe.beamtech.entities.ModEntities;
 import com.gamingframe.beamtech.item.ModItemGroups;
 import com.gamingframe.beamtech.item.ModItems;
 import com.gamingframe.beamtech.recipes.Recipes;
 import com.gamingframe.beamtech.sounds.ModSounds;
 import com.gamingframe.beamtech.world.dimension.ModDimensions;
+import com.gamingframe.beamtech.worldevents.ModWorldEvents;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,9 +41,12 @@ public class BeamTech implements ModInitializer {
 		ModSounds.registerSounds();
 		Recipes.registerRecipes();
 		ModDimensions.registerDimensions();
+		ModWorldEvents.initializeEvents();
+		ModEntities.initializeEntities();
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, dedicated, environment) -> {
 			TeleportCommand.register(dispatcher);
+			SpawnSingularityCommand.register(dispatcher);
 		});
 
 
