@@ -1,9 +1,7 @@
-package com.gamingframe.beamtech.entities;
+package com.gamingframe.beamtech.entities.custom;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 

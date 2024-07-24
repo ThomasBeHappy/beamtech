@@ -32,6 +32,14 @@ repositories {
 		url = "https://server.bbkr.space/artifactory/libs-release"
 	}
 	maven {url = "https://maven.shedaniel.me" }
+	maven {
+		name = 'GeckoLib'
+		url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+		content {
+			includeGroupByRegex("software\\.bernie.*")
+			includeGroup("com.eliotlash.mclib")
+		}
+	}
 }
 
 fabricApi {
@@ -72,6 +80,8 @@ dependencies {
      modImplementation("foundry.veil:Veil-fabric-${project.minecraft_version}:${project.veil_version}") {
          exclude group: "maven.modrinth"
      }
+	modImplementation("software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}")
+	implementation("com.eliotlash.mclib:mclib:20")
 }
 
 processResources {

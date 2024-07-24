@@ -31,6 +31,7 @@ public class ModItemGroups {
                         entries.add(ModBlocks.MIRROR_BLOCK);
                         entries.add(ModBlocks.LASER_OVEN_BLOCK);
                         entries.add(ModBlocks.METAL_MESH_DOOR_BLOCK);
+                        entries.add(ModItems.CLEANBOT_SPAWN_EGG);
                     }).build());
 
     public static final ItemGroup DEV_GROUP = Registry.register(Registries.ITEM_GROUP,

@@ -5,8 +5,8 @@ import com.gamingframe.beamtech.block.ModBlocks;
 import com.gamingframe.beamtech.commands.SpawnSingularityCommand;
 import com.gamingframe.beamtech.commands.TeleportCommand;
 import com.gamingframe.beamtech.effects.ModEffects;
-import com.gamingframe.beamtech.entities.BlackHoleEntity;
 import com.gamingframe.beamtech.entities.ModEntities;
+import com.gamingframe.beamtech.entities.custom.CleanbotEntity;
 import com.gamingframe.beamtech.item.ModItemGroups;
 import com.gamingframe.beamtech.item.ModItems;
 import com.gamingframe.beamtech.recipes.Recipes;
@@ -43,6 +43,10 @@ public class BeamTech implements ModInitializer {
 		ModDimensions.registerDimensions();
 		ModWorldEvents.initializeEvents();
 		ModEntities.initializeEntities();
+
+		FabricDefaultAttributeRegistry.register(ModEntities.CLEANBOT, CleanbotEntity.createCleanbotAttributes());
+
+
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, dedicated, environment) -> {
 			TeleportCommand.register(dispatcher);

@@ -2,7 +2,7 @@ package com.gamingframe.beamtech.worldevents.events;
 
 
 import com.gamingframe.beamtech.BeamTech;
-import com.gamingframe.beamtech.entities.BlackHoleEntity;
+import com.gamingframe.beamtech.entities.custom.BlackHoleEntity;
 import com.gamingframe.beamtech.entities.ModEntities;
 import com.gamingframe.beamtech.sounds.ModSounds;
 import com.gamingframe.beamtech.worldevents.ModWorldEvents;

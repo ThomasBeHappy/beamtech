@@ -16,5 +16,30 @@
     "sounds": [
       "beamtech:singularity_spawning"
     ]
+  },
+  "cleanbot_step": {
+    "subtitle": "sounds.beamtech.cleanbot_step",
+    "sounds": [
+      "beamtech:cleanbot_step"
+    ]
+  },
+  "cleanbot_hurt": {
+    "subtitle": "sounds.beamtech.cleanbot_hurt",
+    "sounds": [
+      "beamtech:cleanbot_hurt"
+    ]
+  },
+  "cleanbot_death": {
+    "subtitle": "sounds.beamtech.cleanbot_death",
+    "sounds": [
+      "beamtech:cleanbot_death"
+    ]
+  },
+  "cleanbot_ambient": {
+    "subtitle": "sounds.beamtech.cleanbot_ambient",
+    "sounds": [
+      "beamtech:cleanbot_ambient1",
+      "beamtech:cleanbot_ambient2"
+    ]
   }
 }

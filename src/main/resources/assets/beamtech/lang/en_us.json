@@ -7,6 +7,7 @@
   "item.beamtech.mirror_ingredient": "Reflective Panel",
   "item.beamtech.laser_gun": "Laser Weapon",
   "item.beamtech.super_treated_glass": "Super Treated Glass",
+  "item.beamtech.cleanbot_spawn_egg": "Cleanbot Spawn Egg",
 
   "item.beamtech.laser_block.desc": "A laser emitter, what else did you expect",
   "item.beamtech.mirror.desc": "Reflects lasers to a different direction",
@@ -25,5 +26,8 @@
 
   "sounds.beamtech.laser_gun_firing": "Laser weapon firing",
   "sounds.beamtech.facility_music": "Music Playing",
-  "sounds.beamtech.singularity_spawning": "Singularity Spawning"
+  "sounds.beamtech.singularity_spawning": "Singularity Spawning",
+  "sounds.beamtech.cleanbot_ambient": "Beeps and boops",
+  "sounds.beamtech.cleanbot_hurt": "Hurtful beeps and boops",
+  "sounds.beamtech.cleanbot_death": "Fading boop"
 }
